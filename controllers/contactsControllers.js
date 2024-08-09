@@ -1,19 +1,16 @@
 import * as contactsService from "../services/contactsServices.js";
 
 import HttpError from "../helpers/HttpError.js";
-import {
-  createContactSchema,
-  updateContactSchema,
-} from "../schemas/contactsSchemas.js";
+
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
-const getAllContacts = async (_, res, next) => {
+const getAllContacts = async (_, res) => {
   const result = await contactsService.listContacts();
 
   res.json(result);
 };
 
-const getOneContact = async (req, res, next) => {
+const getOneContact = async (req, res) => {
   const { id } = req.params;
 
   const result = await contactsService.getContactById(id);
@@ -25,7 +22,7 @@ const getOneContact = async (req, res, next) => {
   res.json(result);
 };
 
-const deleteContact = async (req, res, next) => {
+const deleteContact = async (req, res) => {
   const { id } = req.params;
   const result = await contactsService.removeContact(id);
   if (!result) {
@@ -34,7 +31,7 @@ const deleteContact = async (req, res, next) => {
   res.json({ message: "Delete success" });
 };
 
-const createContact = async (req, res, next) => {
+const createContact = async (req, res) => {
   const result = await contactsService.addContact(req.body);
 
   res.status(201).json(result);
